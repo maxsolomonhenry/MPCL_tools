@@ -23,14 +23,17 @@ function [DbArray, varargout] = getFolderRmsLevel(FileDir, FileExt)
     AveRms = mean(RmsArray, 1);
 
     MinDb = 20*log10(MinRms/MaxRms);
-    AveDb = 20*log10(AveRms/MaxRms);
 
     DbArray = 20*log10(RmsArray/MaxRms);
+    AveDb = mean(DbArray);
+    StdDb = std(DbArray);
 
     fprintf("Highest RMS from file: \t%s\n", Filenames(MaxIndex).name);
     fprintf("Lowest RMS from file: \t%s\n", Filenames(MinIndex).name);
     fprintf("Minimum: \t\t%f dB\n", MinDb);
     fprintf("Average: \t\t%f dB\n", AveDb);
+    fprintf("Std: \t\t%f dB\n", StdDb);
     
     varargout{1} = MinDb;
     varargout{2} = AveDb;
+    varargout{3} = StdDb;
